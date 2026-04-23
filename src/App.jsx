@@ -1,46 +1,44 @@
 import { useState } from 'react'
+import Suma from './Suma';
+import Calculadora from './Calculadora';
 
-function App() {
-  // Definimos el estado para los dos números
-  const [num1, setNum1] = useState('');
-  const [num2, setNum2] = useState('');
+function App () {
+  const [vista, setVista] = useState("home");
+  
+  function suma() {
+    setVista("suma");
+  }
 
-  const manejarSuma = () => {
-    // Convertimos a número porque los inputs devuelven strings
-    const resultado = Number(num1) + Number(num2);
-    alert(`La suma es: ${resultado}`);
-  };
+  function calculadora() {
+    setVista("calculadora");
+  }
+
+  function regresar() {
+    setVista("home");
+  }
+
+  if (vista === "suma") {
+    return <Suma regresar={regresar} />;
+  }
+
+  if (vista === "calculadora") {
+    return <Calculadora regresar={regresar} />;
+  }
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h2>Calculadora Básica</h2>
-      
+    <div>
       <div>
-        <label>Number 1: </label>
-        <input 
-          type="number" 
-          value={num1} 
-          onChange={(e) => setNum1(e.target.value)} 
-        />
+        <button onClick={suma}>
+          Suma
+        </button>
       </div>
-
-      <div style={{ marginTop: '10px' }}>
-        <label>Number 2: </label>
-        <input 
-          type="number" 
-          value={num2} 
-          onChange={(e) => setNum2(e.target.value)} 
-        />
+      <div>
+        <button onClick={calculadora}>
+          Calculadora
+        </button>
       </div>
-
-      <button 
-        onClick={manejarSuma} 
-        style={{ marginTop: '15px', cursor: 'pointer' }}
-      >
-        Sumar
-      </button>
     </div>
-  )
+  );
 }
 
 export default App
