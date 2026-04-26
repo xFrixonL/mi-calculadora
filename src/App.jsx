@@ -1,44 +1,38 @@
 import { useState } from 'react'
-import Suma from './Suma';
-import Calculadora from './Calculadora';
+import Addition from './Addition';
+import Calculator from './Calculator';
+import Catalog from './Catalog';
+import Details from './Details';
 
-function App () {
-  const [vista, setVista] = useState("home");
-  
-  function suma() {
-    setVista("suma");
-  }
+function App() {
+  const [view, setView] = useState("home");
+  const [selectedShow, setSelectedShow] = useState(null);
 
-  function calculadora() {
-    setVista("calculadora");
-  }
+  const goBack = () => setView("home");
 
-  function regresar() {
-    setVista("home");
-  }
-
-  if (vista === "suma") {
-    return <Suma regresar={regresar} />;
-  }
-
-  if (vista === "calculadora") {
-    return <Calculadora regresar={regresar} />;
-  }
+  if (view === "addition") return <Addition goBack={goBack} />;
+  if (view === "calculator") return <Calculator goBack={goBack} />;
+  if (view === "catalog") return <Catalog goBack={goBack} viewDetails={(show) => { setSelectedShow(show); setView("details"); }} />;
+  if (view === "details") return <Details show={selectedShow} goBack={() => setView("catalog")} />;
 
   return (
-    <div>
-      <div>
-        <button onClick={suma}>
-          Suma
+    <div className="main-container p-10">
+      <h1>Main App</h1>
+      <div className="flex flex-col gap-4 max-w-xs mx-auto">
+        <button onClick={() => setView("addition")}>
+          Addition
         </button>
-      </div>
-      <div>
-        <button onClick={calculadora}>
-          Calculadora
+        
+        <button onClick={() => setView("calculator")}>
+          Calculator
+        </button>
+        
+        <button onClick={() => setView("catalog")}>
+          TV Catalog
         </button>
       </div>
     </div>
   );
 }
 
-export default App
+export default App;
